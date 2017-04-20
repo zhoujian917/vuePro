@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <style>
+        .col{color:red}
+        .size{font-size:24px;}
+        .wei{font-weight:bold;}
+        .bor1{border:2px solid blue;}
+        .bor2{background: yellow;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <p v-bind:class="{col:a}">第三方的说法</p>
+        <p v-bind:class="[col,wei]">第三方的说法</p>
+        <div :class="{bor1:bor1,bor2:bor2}">第三方根深蒂固嫂夫人太热太热</div>
+        <input name="a" type="checkbox" v-model="bor1"/>
+        <input  name="a" type="checkbox" v-model="bor2"/>
+    </div>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            a:true,
+            col:"col",
+            wei:"wei",
+            bor1:false,
+            bor2:false
+        }
+    });
+</script>
+</body>
+</html>

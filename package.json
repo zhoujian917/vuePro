@@ -1,0 +1,23 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhoujian917/vuePro.git"
+  },
+  "keywords": [
+    "vue",
+    "2.x"
+  ],
+  "author": "zhoujian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhoujian917/vuePro/issues"
+  },
+  "homepage": "https://github.com/zhoujian917/vuePro#readme"
+}
