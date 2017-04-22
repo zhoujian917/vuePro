@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+<span v-if="show">vue v-if</span>
+    <span v-else>else</span>
+    <div>123</div>
+    <input type="checkbox" v-model="show"/>
+    <div>
+        <input type="text" v-model="num">
+        <div v-if="num==1">
+           用户名： <input type="text" v-bind:key="1"/>
+        </div>
+        <div v-else-if="num==2">
+            密码:<input type="text"  v-bind:key="2"/>
+        </div>
+        <div v-else>else num</div>
+    </div>
+    <div>-----------------show---------------------</div>
+    <div v-show="show">
+        v-show
+    </div>
+</div>
+<script>
+   var app =  new Vue({
+        el:'#app',
+        data:{
+            show:true,
+            num:1
+        }
+    });
+</script>
+</body>
+</html>
