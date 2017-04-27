@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <div v-if="page == 'login'">
+        <h1 >登录</h1>
+        <button @click="page = 'shangpin'">登录</button>
+        <button @click="page=''">注册</button>
+    </div>
+    <div v-else-if="page == 'shangpin'">
+        <h2>商品</h2>
+        <ul>
+            <li v-for="item in goods">
+                <label>{{item.name}}价格：{{item.price}}</label>
+                <a href="#" @click="page='detile'">立即购买</a>
+            </li>
+        </ul>
+    </div>
+    <div v-else-if="page=='detile'">
+        <h2>商品详情</h2>
+       <input type="text" v-model="start"/>
+        评分：<span v-for="item in score()">{{item}}</span>
+        单价：
+        <button @click="page='jiesuan'">结算</button>
+    </div>
+
+    <div v-else-if="page=='jiesuan'">
+        <h2>结算</h2>
+        <ul>
+            <li v-for="item in goods">
+                <input name="a" type="checkbox"  @click="check(item)"/>商品：{{item.name}}<br/>
+                数量：<a href="#" @click="jia(0,item)">-</a>
+                <input :value="item.num || 0" type="num"/>
+                <a href="#" @click="jia(1,item)">+</a><br/>
+                单价：{{item.price}}----金额：<span>{{item.num*item.price | danwei}}</span>
+            </li>
+        </ul>
+        <p>总金额:<span>{{count}}</span></p>
+    </div>
+
+    <div v-else>
+        <h1>注册</h1>
+        <button @click="page='login'">登录</button>
+    </div>
+</div>
+<script>
+    var obj = {
+        page:'login',
+        goods:[
+            {name:'apple',price:10,num:0},
+            {name:'orange',price:20},
+            {name:'banana',price:15}
+        ],
+        start:2.9,
+        num:0
+    }
+    new Vue({
+        el:'#app',
+        data:obj,
+        filters:{
+            danwei:function(val){
+                if(isNaN(val)){
+                    val = 0;
+                }
+                return val + '元';
+            }
+        },
+        methods:{
+            score:function(){
+                var result = [];
+                var score = Math.floor( this.start );//评分整数部分
+                var xiaoshu = (this.start - score ) >= 0.5;
+                for(var i = 0; i < score ;i++){
+                    result.push('☼');
+                }
+                if(xiaoshu){
+                    result.push('★');
+                }
+                while(result.length<10){
+                    result.push('☆');
+                }
+                return result;
+            },
+            jia:function(n,item){
+                if(!item.num){
+                    this.$set(item,'num',0)
+                }
+                if(n===0){
+                    item.num --;
+                }else if(n === 1){
+                    item.num ++;
+                }
+            },
+            check:function(item){
+                this.jia(null,item);
+                if(typeof item.isCheck == undefined){
+                    this.$set(item,"isCheck",false)
+                }
+                item.isCheck = !item.isCheck;
+            }
+        },
+        computed:{
+            count:function(){
+                var all = 0;
+                for(var i in this.goods){
+                    if(this.goods[i].isCheck){
+                        all += this.goods[i].num*this.goods[i].price;
+                    }
+                }
+                return all;
+
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
