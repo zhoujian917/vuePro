@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <style>
+        .ani-enter-leave{
+            animation:d 1s ;
+        }
+        .ani-enter-active{
+            animation:d 1s ;
+        }
+        @keyframes d {
+            0%{transform: scale(1)}
+            50%{transform: scale(1.1)}
+            100%{transform: scale(0.9)}
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <button @click="show=!show">按钮</button>
+    <transition name="ani">
+        <div v-if="show">
+                我是动画效果
+        </div>
+    </transition>
+</div>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            show:true
+        }
+    });
+</script>
+
+</body>
+</html>
