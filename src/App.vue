@@ -1,53 +1,51 @@
 <template>
   <div id="app">
-    <v-header :aa="aaaa"></v-header>
-    {{$store.state}}{{name}}
-    {{guolv}}
-    <button @click="a">点击显示state的数据</button>
-    <button @click="addagepro">点击年龄增加</button>
+    <v-header :seller="datas.seller"></v-header>
+    <div class="tab">
+      <div class="tab-item">
+        <router-link to="/goods">商品</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/ratings">评论</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/seller">商家</router-link>
+      </div>
+    </div>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import {mapState, mapMutations, mapActions} from 'vuex'
-  import header from './components/header.vue'
+  import header from './components/mods/header.vue'
+  import axios from 'axios'
   export default {
     data: function () {
       return {
-        aaaa: 'aaaa'
+        datas: {
+          seller: {},
+          // 商品
+          goods: [],
+          // 评论
+          ratings: []
+        }
       }
     },
-    computed: {
-      ...mapState([
-        'name',
-        'age'
-      ])
-    },
-    methods: {
-      ...mapMutations([
-        'addAge'
-      ]),
-      ...mapActions([
-        'addagepro'
-      ]),
-      a () {
-        alert(this.name)
-      }
+    mounted () {
+      axios.get('/static/data.json').then(res => {
+        console.log(res)
+        this.datas.seller = res.data.seller
+        this.datas.goods = res.data.goods
+        this.datas.ratings = res.data.ratings
+      })
     },
     components: {
       'v-header': header
     }
   }
 </script>
-
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  .tab .tab-item .router-link-active{
+    color: red
+  }
 </style>
